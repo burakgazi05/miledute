@@ -1,0 +1,312 @@
+:root {
+    --bg-color: #050505;
+    --text-color: #e0e0e0;
+    --accent-color: #b08d57;
+    --font-serif: 'Cinzel', serif;
+    --font-sans: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle, rgba(20,20,20,1) 0%, rgba(5,5,5,1) 100%);
+    padding: 0 20px;
+    position: relative;
+}
+
+.logo-img {
+    max-width: 340px;
+    width: 80%;
+    height: auto;
+    margin-bottom: 50px;
+}
+
+/* Waitlist Button */
+.btn-waitlist {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 18px 50px;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.btn-waitlist:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+/* Subscribe Form (gizli baslar, butonla acilir) */
+.subscribe-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 420px;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.subscribe-form input[type="email"] {
+    width: 100%;
+    padding: 15px 20px;
+    background: transparent;
+    border: 1px solid #333;
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    text-align: center;
+}
+
+.subscribe-form input[type="email"]::placeholder {
+    color: #555;
+    letter-spacing: 1px;
+}
+
+.subscribe-form input[type="email"]:focus {
+    border-color: var(--accent-color);
+}
+
+.btn-submit {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 15px 40px;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.btn-submit:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+.btn-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-message {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    min-height: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.form-message.success {
+    color: #6ecf6e;
+}
+
+.form-message.error {
+    color: #cf6e6e;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.4;
+    animation: bounce 2s infinite;
+}
+
+.scroll-indicator span {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.scroll-indicator .arrow {
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, #888, transparent);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* Experiences Section */
+.experiences-section {
+    padding: 150px 10%;
+    text-align: center;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 5px;
+    margin-bottom: 80px;
+    color: var(--accent-color);
+}
+
+.grid {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.experience-card {
+    max-width: 300px;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid #222;
+}
+
+.experience-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.experience-card p {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 200;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid #111;
+}
+
+.footer-text {
+    font-size: 0.7rem;
+    color: #555;
+    letter-spacing: 0.5px;
+}
+
+.unsub-link {
+    color: #777;
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .experiences-section {
+        padding: 100px 5%;
+    }
+
+    .grid {
+        gap: 30px;
+    }
+}
+
+/* Mobile landscape / small tablet */
+@media (max-width: 768px) {
+    .logo-img {
+        max-width: 260px;
+        margin-bottom: 40px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        letter-spacing: 3px;
+        margin-bottom: 50px;
+    }
+
+    .experience-card {
+        max-width: 100%;
+    }
+
+    .experiences-section {
+        padding: 80px 20px;
+    }
+}
+
+/* Mobile portrait */
+@media (max-width: 480px) {
+    .logo-img {
+        max-width: 200px;
+        margin-bottom: 30px;
+    }
+
+    .btn-waitlist {
+        padding: 14px 30px;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+    }
+
+    .subscribe-form {
+        max-width: 100%;
+    }
+
+    .subscribe-form input[type="email"] {
+        padding: 12px 15px;
+        font-size: 0.8rem;
+    }
+
+    .btn-submit {
+        padding: 12px 30px;
+        font-size: 0.75rem;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+    }
+
+    .experience-card h3 {
+        font-size: 1rem;
+    }
+
+    .experience-card p {
+        font-size: 0.8rem;
+    }
+
+    .scroll-indicator {
+        bottom: 25px;
+    }
+}

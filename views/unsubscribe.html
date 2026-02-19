@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILEDUTE | Admin</title>
+    <title>MILEDUTE | Listeden Cik</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="/images/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
@@ -15,9 +15,7 @@
             --font-serif: 'Cinzel', serif;
             --font-sans: 'Montserrat', sans-serif;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -27,37 +25,32 @@
             justify-content: center;
             align-items: center;
         }
-
-        .login-container {
+        .container {
             width: 100%;
-            max-width: 380px;
+            max-width: 420px;
             padding: 40px 30px;
             text-align: center;
         }
-
-        .login-logo {
+        .unsub-logo {
             font-family: var(--font-serif);
             font-size: 1.5rem;
             letter-spacing: 8px;
             margin-bottom: 8px;
             color: #fff;
         }
-
-        .login-subtitle {
+        .unsub-subtitle {
             font-size: 0.7rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: #666;
             margin-bottom: 50px;
         }
-
-        .login-form {
+        .unsub-form {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-
-        .login-form input {
+        .unsub-form input {
             width: 100%;
             padding: 14px 18px;
             background: transparent;
@@ -69,21 +62,14 @@
             outline: none;
             transition: border-color 0.3s;
         }
-
-        .login-form input::placeholder {
-            color: #555;
-        }
-
-        .login-form input:focus {
-            border-color: var(--accent-color);
-        }
-
-        .login-btn {
+        .unsub-form input::placeholder { color: #555; }
+        .unsub-form input:focus { border-color: var(--accent-color); }
+        .unsub-btn {
             width: 100%;
             padding: 14px;
             background: transparent;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
+            border: 1px solid #cf6e6e;
+            color: #cf6e6e;
             font-family: var(--font-sans);
             font-size: 0.8rem;
             letter-spacing: 2px;
@@ -92,49 +78,29 @@
             transition: all 0.4s;
             margin-top: 10px;
         }
-
-        .login-btn:hover {
-            background: var(--accent-color);
-            color: var(--bg-color);
-        }
-
-        .login-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .login-message {
+        .unsub-btn:hover { background: #cf6e6e; color: var(--bg-color); }
+        .unsub-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .unsub-message {
             font-size: 0.75rem;
-            color: #cf6e6e;
             min-height: 18px;
             letter-spacing: 0.5px;
         }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-
-            .login-logo {
-                font-size: 1.2rem;
-                letter-spacing: 6px;
-            }
-        }
+        .unsub-message.success { color: #6ecf6e; }
+        .unsub-message.error { color: #cf6e6e; }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1 class="login-logo">M I L E D U T E</h1>
-        <p class="login-subtitle">Yonetim Paneli</p>
+    <div class="container">
+        <h1 class="unsub-logo">M I L E D U T E</h1>
+        <p class="unsub-subtitle">Listeden Cik</p>
 
-        <form id="login-form" class="login-form">
-            <input type="text" id="username" placeholder="Kullanici Adi" required autocomplete="username">
-            <input type="password" id="password" placeholder="Sifre" required autocomplete="current-password">
-            <p id="login-message" class="login-message"></p>
-            <button type="submit" id="login-btn" class="login-btn">Giris Yap</button>
+        <form id="unsub-form" class="unsub-form">
+            <input type="email" id="unsub-email" placeholder="Email adresiniz" required autocomplete="email">
+            <p id="unsub-message" class="unsub-message"></p>
+            <button type="submit" id="unsub-btn" class="unsub-btn">Listeden Cik</button>
         </form>
     </div>
 
-    <script src="/js/login.js"></script>
+    <script src="/js/unsubscribe.js"></script>
 </body>
 </html>

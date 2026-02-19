@@ -4,402 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MILEDUTE | Curating the Rare</title>
+    <meta name="description" content="MILEDUTE - Nadir olan icin kurasyon. Esssiz deneyimler ve ayricalikli davetler.">
+    <meta property="og:title" content="MILEDUTE | Curating the Rare">
+    <meta property="og:description" content="Nadir olan icin kurasyon. Essiz deneyimler ve ayricalikli davetler.">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="/images/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-color: #050505;
-            --text-color: #e0e0e0;
-            --accent-color: #b08d57;
-            --font-serif: 'Cinzel', serif;
-            --font-sans: 'Montserrat', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-sans);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: radial-gradient(circle, rgba(20,20,20,1) 0%, rgba(5,5,5,1) 100%);
-            padding: 0 20px;
-            position: relative;
-        }
-
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 3.5rem;
-            font-weight: 400;
-            letter-spacing: 15px;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-
-        .tagline {
-            font-size: 0.9rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            margin-bottom: 60px;
-            text-transform: uppercase;
-            color: #a0a0a0;
-        }
-
-        /* Email Form */
-        .subscribe-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            width: 100%;
-            max-width: 420px;
-        }
-
-        .subscribe-form input[type="email"] {
-            width: 100%;
-            padding: 15px 20px;
-            background: transparent;
-            border: 1px solid #333;
-            color: var(--text-color);
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .subscribe-form input[type="email"]::placeholder {
-            color: #666;
-            letter-spacing: 1px;
-        }
-
-        .subscribe-form input[type="email"]:focus {
-            border-color: var(--accent-color);
-        }
-
-        .btn-exclusive {
-            width: 100%;
-            background: transparent;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 15px 40px;
-            font-family: var(--font-sans);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.5s ease;
-        }
-
-        .btn-exclusive:hover {
-            background: var(--accent-color);
-            color: var(--bg-color);
-        }
-
-        .btn-exclusive:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .form-message {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            min-height: 20px;
-            transition: opacity 0.3s ease;
-        }
-
-        .form-message.success {
-            color: #6ecf6e;
-        }
-
-        .form-message.error {
-            color: #cf6e6e;
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.4;
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator span {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #888;
-        }
-
-        .scroll-indicator .arrow {
-            width: 1px;
-            height: 30px;
-            background: linear-gradient(to bottom, #888, transparent);
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(8px); }
-        }
-
-        /* Experiences Section */
-        .experiences-section {
-            padding: 150px 10%;
-            text-align: center;
-        }
-
-        .section-title {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            font-weight: 400;
-            letter-spacing: 5px;
-            margin-bottom: 80px;
-            color: var(--accent-color);
-        }
-
-        .grid {
-            display: flex;
-            gap: 50px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .experience-card {
-            max-width: 300px;
-            text-align: center;
-            padding: 30px 20px;
-            border-top: 1px solid #222;
-        }
-
-        .experience-card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .experience-card p {
-            font-size: 0.85rem;
-            color: #888;
-            font-weight: 200;
-        }
-
-        /* ===== RESPONSIVE ===== */
-
-        /* Tablet */
-        @media (max-width: 1024px) {
-            .experiences-section {
-                padding: 100px 5%;
-            }
-
-            .grid {
-                gap: 30px;
-            }
-        }
-
-        /* Mobile landscape / small tablet */
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2.2rem;
-                letter-spacing: 10px;
-            }
-
-            .tagline {
-                font-size: 0.75rem;
-                letter-spacing: 3px;
-                margin-bottom: 40px;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-                letter-spacing: 3px;
-                margin-bottom: 50px;
-            }
-
-            .experience-card {
-                max-width: 100%;
-            }
-
-            .experiences-section {
-                padding: 80px 20px;
-            }
-        }
-
-        /* Mobile portrait */
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.6rem;
-                letter-spacing: 8px;
-            }
-
-            .tagline {
-                font-size: 0.7rem;
-                letter-spacing: 2px;
-                margin-bottom: 30px;
-            }
-
-            .subscribe-form {
-                max-width: 100%;
-            }
-
-            .subscribe-form input[type="email"] {
-                padding: 12px 15px;
-                font-size: 0.8rem;
-            }
-
-            .btn-exclusive {
-                padding: 12px 30px;
-                font-size: 0.75rem;
-            }
-
-            .section-title {
-                font-size: 1.2rem;
-                margin-bottom: 40px;
-            }
-
-            .experience-card h3 {
-                font-size: 1rem;
-            }
-
-            .experience-card p {
-                font-size: 0.8rem;
-            }
-
-            .scroll-indicator {
-                bottom: 25px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
     <div id="app">
         <header class="hero">
-            <h1 class="logo">M I L E D U T E</h1>
-            <p class="tagline">Nadir Olan İçin Kürasyon</p>
+            <img src="/images/logo.png" alt="MILEDUTE Experience" class="logo-img">
 
-            <form id="subscribe-form" class="subscribe-form">
-                <input type="email" id="email-input" placeholder="Email adresinizi giriniz" required autocomplete="email">
-                <button type="submit" id="submit-btn" class="btn-exclusive">Davet Listesine Katıl</button>
+            <button id="waitlist-btn" class="btn-waitlist">
+                Register for Endless Experiences
+            </button>
+
+            <form id="subscribe-form" class="subscribe-form" style="display:none;">
+                <input type="email" id="email-input" placeholder="E-posta adresinizi giriniz" required autocomplete="email">
+                <button type="submit" id="submit-btn" class="btn-submit">Kaydet</button>
                 <p id="form-message" class="form-message"></p>
             </form>
 
-            <div class="scroll-indicator">
-                <span>Keşfet</span>
+            <div id="scroll-indicator" class="scroll-indicator" style="display:none;">
+                <span>Kesfet</span>
                 <div class="arrow"></div>
             </div>
         </header>
 
         <section id="experiences" class="experiences-section">
-            <h2 class="section-title">Yaklaşan Ayrıcalıklar</h2>
+            <h2 class="section-title">Yaklasan Ayricaliklar</h2>
             <div id="experience-list" class="grid"></div>
         </section>
+
+        <footer id="footer" class="footer" style="display:none;">
+        </footer>
     </div>
 
-    <script>
-        const mileduteExperiences = [
-            {
-                title: "Bölüm I: Bağın Uyanışı",
-                description: "Toskana'da mahrem bir mahzende, 3 Michelin yıldızlı şefimizle ateş ve şarap temalı kapalı devre bir gece."
-            },
-            {
-                title: "Bölüm II: Tarihin Yankısı",
-                description: "Yüzyıllık bir malikanede, sadece 10 seçkin konuk için tasarlanmış teatral gastronomi seremonisi."
-            },
-            {
-                title: "Bölüm III: Sırların Sofrası",
-                description: "Rotası son ana kadar gizli tutulan özel bir lokasyonda, dünyanın en nadir tatlarıyla buluşma."
-            }
-        ];
-
-        function buildExperienceCard(experience) {
-            const card = document.createElement('div');
-            card.className = 'experience-card';
-
-            const title = document.createElement('h3');
-            title.innerText = experience.title;
-
-            const desc = document.createElement('p');
-            desc.innerText = experience.description;
-
-            card.appendChild(title);
-            card.appendChild(desc);
-            return card;
-        }
-
-        function renderExperiences(dataArray) {
-            const container = document.getElementById('experience-list');
-            for (let i = 0; i < dataArray.length; i++) {
-                container.appendChild(buildExperienceCard(dataArray[i]));
-            }
-        }
-
-        async function handleSubscribe(e) {
-            e.preventDefault();
-
-            const emailInput = document.getElementById('email-input');
-            const submitBtn = document.getElementById('submit-btn');
-            const messageEl = document.getElementById('form-message');
-            const email = emailInput.value.trim();
-
-            if (!email) return;
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Gönderiliyor...';
-            messageEl.textContent = '';
-            messageEl.className = 'form-message';
-
-            try {
-                const res = await fetch('/api/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                });
-
-                const data = await res.json();
-
-                messageEl.textContent = data.message;
-                messageEl.className = 'form-message ' + (data.success ? 'success' : 'error');
-
-                if (data.success) {
-                    emailInput.value = '';
-                }
-            } catch {
-                messageEl.textContent = 'Bağlantı hatası. Lütfen tekrar deneyin.';
-                messageEl.className = 'form-message error';
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Davet Listesine Katıl';
-            }
-        }
-
-        function init() {
-            renderExperiences(mileduteExperiences);
-            document.getElementById('subscribe-form').addEventListener('submit', handleSubscribe);
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

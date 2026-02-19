@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MILEDUTE | Dashboard</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="/images/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -74,6 +76,16 @@
             color: var(--bg-color);
         }
 
+        .btn-sm.danger {
+            border-color: #cf6e6e;
+            color: #cf6e6e;
+        }
+
+        .btn-sm.danger:hover {
+            background: #cf6e6e;
+            color: var(--bg-color);
+        }
+
         /* Content */
         .content {
             max-width: 900px;
@@ -106,6 +118,37 @@
             font-family: var(--font-serif);
             font-size: 2rem;
             color: var(--accent-color);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            background: transparent;
+            border: 1px solid #222;
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            outline: none;
+            transition: border-color 0.3s;
+            min-width: 250px;
+        }
+
+        .search-input::placeholder {
+            color: #555;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
         }
 
         /* Table */
@@ -141,6 +184,28 @@
 
         .email-table tr:hover td {
             color: #fff;
+        }
+
+        .email-table input[type="checkbox"] {
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            padding: 4px 12px;
+            background: transparent;
+            border: 1px solid #444;
+            color: #888;
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-delete:hover {
+            border-color: #cf6e6e;
+            color: #cf6e6e;
         }
 
         .no-data {
@@ -185,6 +250,71 @@
             border-color: var(--accent-color);
         }
 
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal h3 {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            color: #ccc;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px 15px;
+            background: transparent;
+            border: 1px solid #222;
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 12px;
+        }
+
+        .modal input::placeholder {
+            color: #555;
+        }
+
+        .modal input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+        }
+
+        .pw-message {
+            font-size: 0.75rem;
+            min-height: 18px;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .admin-header {
@@ -211,6 +341,15 @@
                 padding: 10px 8px;
                 font-size: 0.75rem;
             }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input {
+                min-width: auto;
+            }
         }
 
         @media (max-width: 480px) {
@@ -225,124 +364,64 @@
     <header class="admin-header">
         <div class="admin-logo">M I L E D U T E</div>
         <div class="header-actions">
-            <a href="/admin/export-csv" class="btn-sm primary">CSV İndir</a>
-            <button id="logout-btn" class="btn-sm">Çıkış</button>
+            <a href="/admin/export-csv" class="btn-sm primary">CSV Indir</a>
+            <button id="change-password-btn" class="btn-sm">Sifre Degistir</button>
+            <button id="logout-btn" class="btn-sm">Cikis</button>
         </div>
     </header>
 
     <main class="content">
         <div class="stats">
             <div class="stat-card">
-                <div class="label">Toplam Kayıt</div>
+                <div class="label">Toplam Kayit</div>
                 <div class="value" id="total-count">-</div>
             </div>
         </div>
 
         <div class="table-section">
-            <h2>Kayıtlı E-postalar</h2>
+            <h2>Kayitli E-postalar</h2>
+
+            <div class="toolbar">
+                <input type="text" id="search-input" class="search-input" placeholder="E-posta ara...">
+                <button id="delete-selected-btn" class="btn-sm danger">Secilenleri Sil</button>
+            </div>
+
             <table class="email-table">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="select-all"></th>
                         <th>#</th>
                         <th>E-posta</th>
-                        <th>Kayıt Tarihi</th>
+                        <th>Kayit Tarihi</th>
+                        <th>Islem</th>
                     </tr>
                 </thead>
                 <tbody id="email-tbody">
                 </tbody>
             </table>
-            <div id="no-data" class="no-data" style="display:none;">Henüz kayıtlı e-posta bulunmuyor.</div>
+            <div id="no-data" class="no-data" style="display:none;">Henuz kayitli e-posta bulunmuyor.</div>
         </div>
 
         <div class="pagination" id="pagination"></div>
     </main>
 
-    <script>
-        let currentPage = 1;
+    <!-- Sifre Degistir Modal -->
+    <div class="modal-overlay" id="password-modal">
+        <div class="modal">
+            <h3>Sifre Degistir</h3>
+            <form id="password-form">
+                <input type="password" id="pw-current" placeholder="Mevcut Sifre" required>
+                <input type="password" id="pw-new" placeholder="Yeni Sifre (min 8 karakter)" required minlength="8">
+                <input type="password" id="pw-confirm" placeholder="Yeni Sifre (tekrar)" required minlength="8">
+                <p id="pw-message" class="pw-message"></p>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-sm primary">Degistir</button>
+                    <button type="button" id="password-modal-close" class="btn-sm">Iptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        async function loadEmails(page) {
-            try {
-                const res = await fetch(`/admin/emails?page=${page}&limit=50`);
-                if (res.status === 401 || res.redirected) {
-                    window.location.href = '/admin/login';
-                    return;
-                }
-
-                const data = await res.json();
-                currentPage = data.page;
-
-                document.getElementById('total-count').textContent = data.total;
-
-                const tbody = document.getElementById('email-tbody');
-                const noData = document.getElementById('no-data');
-
-                if (data.emails.length === 0) {
-                    tbody.innerHTML = '';
-                    noData.style.display = 'block';
-                    return;
-                }
-
-                noData.style.display = 'none';
-                tbody.innerHTML = '';
-
-                data.emails.forEach(function(entry, index) {
-                    const tr = document.createElement('tr');
-                    const num = (data.page - 1) * 50 + index + 1;
-                    const date = new Date(entry.createdAt).toLocaleString('tr-TR');
-
-                    const tdNum = document.createElement('td');
-                    tdNum.textContent = num;
-
-                    const tdEmail = document.createElement('td');
-                    tdEmail.textContent = entry.email;
-
-                    const tdDate = document.createElement('td');
-                    tdDate.textContent = date;
-
-                    tr.appendChild(tdNum);
-                    tr.appendChild(tdEmail);
-                    tr.appendChild(tdDate);
-                    tbody.appendChild(tr);
-                });
-
-                renderPagination(data.page, data.totalPages);
-            } catch {
-                document.getElementById('no-data').textContent = 'Veriler yüklenirken hata oluştu.';
-                document.getElementById('no-data').style.display = 'block';
-            }
-        }
-
-        function renderPagination(current, total) {
-            const container = document.getElementById('pagination');
-            container.innerHTML = '';
-
-            if (total <= 1) return;
-
-            const prevBtn = document.createElement('button');
-            prevBtn.textContent = '← Önceki';
-            prevBtn.disabled = current <= 1;
-            prevBtn.addEventListener('click', function() { loadEmails(current - 1); });
-            container.appendChild(prevBtn);
-
-            const pageInfo = document.createElement('button');
-            pageInfo.textContent = current + ' / ' + total;
-            pageInfo.className = 'current';
-            pageInfo.disabled = true;
-            container.appendChild(pageInfo);
-
-            const nextBtn = document.createElement('button');
-            nextBtn.textContent = 'Sonraki →';
-            nextBtn.disabled = current >= total;
-            nextBtn.addEventListener('click', function() { loadEmails(current + 1); });
-            container.appendChild(nextBtn);
-        }
-
-        document.getElementById('logout-btn').addEventListener('click', async function() {
-            await fetch('/admin/logout', { method: 'POST' });
-            window.location.href = '/admin/login';
-        });
-
-        loadEmails(1);
-    </script>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>

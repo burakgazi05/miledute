@@ -4,6 +4,9 @@ function authenticateAdmin(req, res, next) {
   const token = req.cookies.admin_token;
 
   if (!token) {
+    if (req.xhr || req.headers.accept === 'application/json' || req.path !== '/dashboard') {
+      return res.status(401).json({ success: false, message: 'Yetkisiz erisim.' });
+    }
     return res.redirect('/admin/login');
   }
 
@@ -13,6 +16,9 @@ function authenticateAdmin(req, res, next) {
     next();
   } catch {
     res.clearCookie('admin_token');
+    if (req.xhr || req.headers.accept === 'application/json' || req.path !== '/dashboard') {
+      return res.status(401).json({ success: false, message: 'Oturum suresi doldu.' });
+    }
     return res.redirect('/admin/login');
   }
 }
