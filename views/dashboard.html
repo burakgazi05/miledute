@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILEDUTE | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #b08d57;
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            border-bottom: 1px solid #151515;
+        }
+
+        .admin-logo {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            letter-spacing: 6px;
+            color: #fff;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-sm {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid #333;
+            color: #999;
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-sm:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-sm.primary {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-sm.primary:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        /* Content */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            padding: 25px 30px;
+            border: 1px solid #151515;
+            min-width: 180px;
+        }
+
+        .stat-card .label {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        /* Table */
+        .table-section h2 {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            color: #ccc;
+        }
+
+        .email-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .email-table th {
+            text-align: left;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #666;
+            padding: 12px 15px;
+            border-bottom: 1px solid #222;
+        }
+
+        .email-table td {
+            padding: 14px 15px;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #111;
+            color: #bbb;
+        }
+
+        .email-table tr:hover td {
+            color: #fff;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #444;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid #222;
+            color: #888;
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination .current {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .content {
+                padding: 30px 15px;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stat-card {
+                min-width: auto;
+            }
+
+            .email-table th,
+            .email-table td {
+                padding: 10px 8px;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="admin-logo">M I L E D U T E</div>
+        <div class="header-actions">
+            <a href="/admin/export-csv" class="btn-sm primary">CSV İndir</a>
+            <button id="logout-btn" class="btn-sm">Çıkış</button>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="label">Toplam Kayıt</div>
+                <div class="value" id="total-count">-</div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h2>Kayıtlı E-postalar</h2>
+            <table class="email-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>E-posta</th>
+                        <th>Kayıt Tarihi</th>
+                    </tr>
+                </thead>
+                <tbody id="email-tbody">
+                </tbody>
+            </table>
+            <div id="no-data" class="no-data" style="display:none;">Henüz kayıtlı e-posta bulunmuyor.</div>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+    </main>
+
+    <script>
+        let currentPage = 1;
+
+        async function loadEmails(page) {
+            try {
+                const res = await fetch(`/admin/emails?page=${page}&limit=50`);
+                if (res.status === 401 || res.redirected) {
+                    window.location.href = '/admin/login';
+                    return;
+                }
+
+                const data = await res.json();
+                currentPage = data.page;
+
+                document.getElementById('total-count').textContent = data.total;
+
+                const tbody = document.getElementById('email-tbody');
+                const noData = document.getElementById('no-data');
+
+                if (data.emails.length === 0) {
+                    tbody.innerHTML = '';
+                    noData.style.display = 'block';
+                    return;
+                }
+
+                noData.style.display = 'none';
+                tbody.innerHTML = '';
+
+                data.emails.forEach(function(entry, index) {
+                    const tr = document.createElement('tr');
+                    const num = (data.page - 1) * 50 + index + 1;
+                    const date = new Date(entry.createdAt).toLocaleString('tr-TR');
+
+                    const tdNum = document.createElement('td');
+                    tdNum.textContent = num;
+
+                    const tdEmail = document.createElement('td');
+                    tdEmail.textContent = entry.email;
+
+                    const tdDate = document.createElement('td');
+                    tdDate.textContent = date;
+
+                    tr.appendChild(tdNum);
+                    tr.appendChild(tdEmail);
+                    tr.appendChild(tdDate);
+                    tbody.appendChild(tr);
+                });
+
+                renderPagination(data.page, data.totalPages);
+            } catch {
+                document.getElementById('no-data').textContent = 'Veriler yüklenirken hata oluştu.';
+                document.getElementById('no-data').style.display = 'block';
+            }
+        }
+
+        function renderPagination(current, total) {
+            const container = document.getElementById('pagination');
+            container.innerHTML = '';
+
+            if (total <= 1) return;
+
+            const prevBtn = document.createElement('button');
+            prevBtn.textContent = '← Önceki';
+            prevBtn.disabled = current <= 1;
+            prevBtn.addEventListener('click', function() { loadEmails(current - 1); });
+            container.appendChild(prevBtn);
+
+            const pageInfo = document.createElement('button');
+            pageInfo.textContent = current + ' / ' + total;
+            pageInfo.className = 'current';
+            pageInfo.disabled = true;
+            container.appendChild(pageInfo);
+
+            const nextBtn = document.createElement('button');
+            nextBtn.textContent = 'Sonraki →';
+            nextBtn.disabled = current >= total;
+            nextBtn.addEventListener('click', function() { loadEmails(current + 1); });
+            container.appendChild(nextBtn);
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', async function() {
+            await fetch('/admin/logout', { method: 'POST' });
+            window.location.href = '/admin/login';
+        });
+
+        loadEmails(1);
+    </script>
+</body>
+</html>
