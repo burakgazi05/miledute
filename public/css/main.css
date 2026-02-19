@@ -50,7 +50,6 @@ body {
     font-family: var(--font-sans);
     font-size: 0.8rem;
     letter-spacing: 3px;
-    text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -109,7 +108,6 @@ body {
     font-family: var(--font-sans);
     font-size: 0.8rem;
     letter-spacing: 2px;
-    text-transform: uppercase;
     cursor: pointer;
     transition: all 0.5s ease;
 }
@@ -156,7 +154,6 @@ body {
 .scroll-indicator span {
     font-size: 0.65rem;
     letter-spacing: 2px;
-    text-transform: uppercase;
     color: #888;
 }
 

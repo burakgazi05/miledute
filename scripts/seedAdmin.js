@@ -2,12 +2,25 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const mongoose = require('mongoose');
 const Admin = require('../models/Admin');
 
+function parseArgs() {
+  const args = process.argv.slice(2);
+  const params = {};
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--user' && args[i + 1]) {
+      params.username = args[++i];
+    } else if (args[i] === '--password' && args[i + 1]) {
+      params.password = args[++i];
+    }
+  }
+  return params;
+}
+
 async function seed() {
-  const username = process.env.ADMIN_USERNAME;
-  const password = process.env.ADMIN_PASSWORD;
+  const { username, password } = parseArgs();
 
   if (!username || !password) {
-    console.error('Hata: .env dosyasinda ADMIN_USERNAME ve ADMIN_PASSWORD tanimlanmali.');
+    console.error('Kullanim: node scripts/seedAdmin.js --user <kullanici> --password <sifre>');
+    console.error('Ornek:    node scripts/seedAdmin.js --user admin --password GucluSifre123!');
     process.exit(1);
   }
 
