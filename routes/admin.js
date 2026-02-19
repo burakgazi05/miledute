@@ -64,7 +64,8 @@ router.post('/login', loginLimiter, async (req, res) => {
     });
 
     res.json({ success: true, message: 'Giris basarili.' });
-  } catch {
+  } catch (err) {
+    console.error('Login hatasi:', err);
     res.status(500).json({ success: false, message: 'Sunucu hatasi.' });
   }
 });
@@ -93,7 +94,8 @@ router.get('/emails', authenticateAdmin, async (req, res) => {
     ]);
 
     res.json({ emails, total, page, totalPages: Math.ceil(total / limit) });
-  } catch {
+  } catch (err) {
+    console.error('Email listesi hatasi:', err);
     res.status(500).json({ message: 'Sunucu hatasi.' });
   }
 });
@@ -111,7 +113,8 @@ router.delete('/emails/:id', authenticateAdmin, async (req, res) => {
     }
 
     res.json({ success: true, message: 'Email silindi.' });
-  } catch {
+  } catch (err) {
+    console.error('Email silme hatasi:', err);
     res.status(500).json({ success: false, message: 'Sunucu hatasi.' });
   }
 });
@@ -136,7 +139,8 @@ router.post('/emails/bulk-delete', authenticateAdmin, async (req, res) => {
 
     const result = await Email.deleteMany({ _id: { $in: validIds } });
     res.json({ success: true, message: result.deletedCount + ' email silindi.' });
-  } catch {
+  } catch (err) {
+    console.error('Toplu silme hatasi:', err);
     res.status(500).json({ success: false, message: 'Sunucu hatasi.' });
   }
 });
@@ -157,7 +161,8 @@ router.get('/export-csv', authenticateAdmin, async (req, res) => {
     res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     res.setHeader('Content-Disposition', 'attachment; filename=miledute-emails.csv');
     res.send('\uFEFF' + csv);
-  } catch {
+  } catch (err) {
+    console.error('CSV export hatasi:', err);
     res.status(500).json({ message: 'CSV olusturulurken hata olustu.' });
   }
 });
@@ -189,7 +194,8 @@ router.post('/change-password', authenticateAdmin, async (req, res) => {
     await admin.save();
 
     res.json({ success: true, message: 'Sifre basariyla degistirildi.' });
-  } catch {
+  } catch (err) {
+    console.error('Sifre degistirme hatasi:', err);
     res.status(500).json({ success: false, message: 'Sunucu hatasi.' });
   }
 });
