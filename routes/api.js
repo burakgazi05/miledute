@@ -2,8 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
-const Email = require('../models/Email');
-const Experience = require('../models/Experience');
+const sheets = require('../lib/sheets');
 
 const router = express.Router();
 
@@ -27,14 +26,15 @@ router.post(
     }
 
     try {
-      const existing = await Email.findOne({ email: req.body.email });
+      const existing = await sheets.findEmail(req.body.email);
       if (existing) {
         return res.status(409).json({ success: false, message: 'Bu email adresi zaten kayitli.' });
       }
 
-      await Email.create({ email: req.body.email });
+      await sheets.appendEmail(req.body.email);
       res.status(201).json({ success: true, message: 'Davet listemize basariyla eklendiniz.' });
     } catch (err) {
+      console.error('Subscribe hatasi:', err);
       res.status(500).json({ success: false, message: 'Bir hata olustu. Lutfen tekrar deneyin.' });
     }
   }
@@ -61,29 +61,27 @@ router.post(
     }
 
     try {
-      const result = await Email.findOneAndDelete({ email: req.body.email });
-      if (!result) {
+      const deleted = await sheets.deleteEmailByAddress(req.body.email);
+      if (!deleted) {
         return res.status(404).json({ success: false, message: 'Bu email adresi listede bulunamadi.' });
       }
 
       res.json({ success: true, message: 'Listeden basariyla cikarildiniz.' });
     } catch (err) {
+      console.error('Unsubscribe hatasi:', err);
       res.status(500).json({ success: false, message: 'Bir hata olustu. Lutfen tekrar deneyin.' });
     }
   }
 );
 
 // Public deneyim listesi
-router.get('/experiences', async (req, res) => {
+router.get('/experiences', (req, res) => {
   try {
-    const experiences = await Experience.find({ active: true })
-      .sort({ order: 1 })
-      .select('title description')
-      .lean();
-
+    const data = require('../data/experiences.json');
+    const experiences = data.filter(e => e.active);
     res.json({ experiences });
-  } catch (err) {
-    res.status(500).json({ experiences: [] });
+  } catch {
+    res.json({ experiences: [] });
   }
 });
 

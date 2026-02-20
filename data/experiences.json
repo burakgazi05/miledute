@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Bolum I: Bagin Uyanisi",
+    "description": "Toskana'da mahrem bir mahzende, 3 Michelin yildizli sefimizle ates ve sarap temali kapali devre bir gece.",
+    "order": 1,
+    "active": false
+  },
+  {
+    "title": "Bolum II: Tarihin Yankisi",
+    "description": "Yuzyillik bir malikanede, sadece 10 seckin konuk icin tasarlanmis teatral gastronomi seremonisi.",
+    "order": 2,
+    "active": false
+  },
+  {
+    "title": "Bolum III: Sirlarin Sofrasi",
+    "description": "Rotasi son ana kadar gizli tutulan ozel bir lokasyonda, dunyanin en nadir tatlariyla bulusma.",
+    "order": 3,
+    "active": false
+  }
+]
