@@ -17,6 +17,36 @@ const loginLimiter = rateLimit({
   legacyHeaders: false
 });
 
+// *** GECICI: Admin setup endpointi - admin olusturduktan sonra SIL ***
+router.get('/setup', (req, res) => {
+  res.send(`<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Admin Setup</title><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#050505;color:#e0e0e0;font-family:'Montserrat',sans-serif;height:100vh;display:flex;justify-content:center;align-items:center}.box{width:100%;max-width:380px;padding:40px 30px;text-align:center}h1{font-size:1.2rem;letter-spacing:4px;margin-bottom:30px;color:#b08d57}input{width:100%;padding:14px 18px;background:transparent;border:1px solid #222;color:#e0e0e0;font-size:.85rem;outline:none;margin-bottom:12px;transition:border-color .3s}input:focus{border-color:#b08d57}button{width:100%;padding:14px;background:transparent;border:1px solid #b08d57;color:#b08d57;font-size:.8rem;letter-spacing:2px;cursor:pointer;transition:all .4s;margin-top:8px}button:hover{background:#b08d57;color:#050505}p{font-size:.75rem;min-height:18px;margin-top:12px;letter-spacing:.5px}</style></head><body><div class="box"><h1>ADMIN SETUP</h1><input type="text" id="u" placeholder="Kullanici Adi"><input type="password" id="p" placeholder="Sifre (min 8 karakter)"><button onclick="go()">Olustur / Guncelle</button><p id="m"></p></div><script>async function go(){var u=document.getElementById('u').value.trim(),p=document.getElementById('p').value,m=document.getElementById('m');if(!u||!p){m.textContent='Kullanici adi ve sifre gerekli.';m.style.color='#cf6e6e';return}try{var r=await fetch('/admin/setup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});var d=await r.json();m.textContent=d.message;m.style.color=d.success?'#6ecf6e':'#cf6e6e'}catch(e){m.textContent='Baglanti hatasi.';m.style.color='#cf6e6e'}}</script></body></html>`);
+});
+
+router.post('/setup', rateLimit({ windowMs: 15 * 60 * 1000, max: 5 }), async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ success: false, message: 'Kullanici adi ve sifre gerekli.' });
+  }
+  if (password.length < 8) {
+    return res.status(400).json({ success: false, message: 'Sifre en az 8 karakter olmali.' });
+  }
+  try {
+    const existing = await Admin.findOne({ username });
+    if (existing) {
+      existing.password = password;
+      await existing.save();
+      res.json({ success: true, message: 'Admin sifresi guncellendi: ' + username });
+    } else {
+      await Admin.create({ username, password });
+      res.json({ success: true, message: 'Admin olusturuldu: ' + username });
+    }
+  } catch (err) {
+    console.error('Setup hatasi:', err);
+    res.status(500).json({ success: false, message: 'Sunucu hatasi.' });
+  }
+});
+// *** GECICI KISIM SONU ***
+
 // Login sayfasi
 router.get('/login', (req, res) => {
   const token = req.cookies.admin_token;

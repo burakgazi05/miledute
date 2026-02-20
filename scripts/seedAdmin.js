@@ -30,7 +30,9 @@ async function seed() {
 
     const existing = await Admin.findOne({ username });
     if (existing) {
-      console.log('Admin kullanicisi zaten mevcut. Islem atlaniyor.');
+      existing.password = password;
+      await existing.save();
+      console.log(`Admin sifresi guncellendi: ${username}`);
     } else {
       await Admin.create({ username, password });
       console.log(`Admin kullanicisi olusturuldu: ${username}`);
